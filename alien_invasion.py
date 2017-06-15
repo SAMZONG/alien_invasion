@@ -2,6 +2,7 @@
 
 import sys
 import pygame
+from pygame.sprite import Group
 from settings import Settings
 from ship import Ship
 import game_functions as gf
@@ -22,6 +23,9 @@ def run_game():
     # 创建一艘飞船
     ship = Ship(ai_settings, screen)
 
+    # 创建一个用于存储子弹的编组
+    bullets = Group()
+
     # 开始游戏的主循环
     while True:
 
@@ -29,8 +33,9 @@ def run_game():
         # for event in pygame.event.get():
         #     if event.type == pygame.QUIT:
         #         sys.exit()
-        gf.check_events(ship)
+        gf.check_events(ai_settings, screen, ship, bullets)
         ship.update()
+        gf.update_bullets(bullets)
 
         # 每次循环时都重绘屏幕
         # screen.fail(bg_color)
@@ -39,6 +44,6 @@ def run_game():
 
         # 让最近绘制的屏幕可见
         # pygame.display.flip()
-        gf.update_screen(ai_settings, screen, ship)
+        gf.update_screen(ai_settings, screen, ship, bullets)
 
 run_game()
