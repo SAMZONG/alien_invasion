@@ -29,7 +29,8 @@ def run_game():
         # for event in pygame.event.get():
         #     if event.type == pygame.QUIT:
         #         sys.exit()
-        gf.check_events()
+        gf.check_events(ship)
+        ship.update()
 
         # 每次循环时都重绘屏幕
         # screen.fail(bg_color)
