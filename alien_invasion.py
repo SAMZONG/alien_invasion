@@ -6,6 +6,7 @@ from pygame.sprite import Group
 from settings import Settings
 from ship import Ship
 # from alien import Alien
+from game_stats import GameStats
 import game_functions as gf
 
 def run_game():
@@ -16,7 +17,7 @@ def run_game():
     screen = pygame.display.set_mode(
         (ai_settings.screen_width, ai_settings.screen_height)
     )
-    pygame.display.set_caption("Alien Incasion")
+    pygame.display.set_caption("Alien Ivcasion")
 
     # 设置背景颜色
     # bg_color = (233,233,233)
@@ -36,6 +37,8 @@ def run_game():
     # 创建外星人群
     gf.create_fleet(ai_settings, screen, ship, aliens)
 
+    stats = GameStats(ai_settings)
+
     # 开始游戏的主循环
     while True:
 
@@ -44,9 +47,11 @@ def run_game():
         #     if event.type == pygame.QUIT:
         #         sys.exit()
         gf.check_events(ai_settings, screen, ship, bullets)
-        ship.update()
-        gf.update_bullets(aliens, bullets)
-        gf.update_aliens(ai_settings, aliens)
+
+        if stats.game_active:
+            ship.update()
+            gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
+            gf.update_aliens(ai_settings,stats, screen, ship, aliens, bullets)
         # 每次循环时都重绘屏幕
         # screen.fail(bg_color)
         # screen.fill(ai_settings.bg_color)
