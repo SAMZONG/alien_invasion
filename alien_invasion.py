@@ -7,6 +7,7 @@ from settings import Settings
 from ship import Ship
 # from alien import Alien
 from game_stats import GameStats
+from button import Button
 import game_functions as gf
 
 def run_game():
@@ -37,7 +38,11 @@ def run_game():
     # 创建外星人群
     gf.create_fleet(ai_settings, screen, ship, aliens)
 
+    #
     stats = GameStats(ai_settings)
+
+    # 创建Play按钮
+    play_button = Button(ai_settings, screen, "Play")
 
     # 开始游戏的主循环
     while True:
@@ -46,7 +51,7 @@ def run_game():
         # for event in pygame.event.get():
         #     if event.type == pygame.QUIT:
         #         sys.exit()
-        gf.check_events(ai_settings, screen, ship, bullets)
+        gf.check_events(ai_settings, screen, stats,play_button, ship, bullets)
 
         if stats.game_active:
             ship.update()
@@ -59,6 +64,6 @@ def run_game():
 
         # 让最近绘制的屏幕可见
         # pygame.display.flip()
-        gf.update_screen(ai_settings, screen, ship, aliens, bullets)
+        gf.update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button)
 
 run_game()
